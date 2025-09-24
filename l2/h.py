@@ -95,16 +95,16 @@ class LinkedLists():
         while tail.next:
             tail = tail.next 
             length += 1
-            k = k % length
-            if k == 0 :
-                return
-            prev = self.head 
-            for _ in range(k - 1):
-                prev = prev.next
-            new_head = prev.next
-            tail.next = self.head
-            prev.next = None
-            self.head = new_head
+        k = k % length
+        if k == 0 :
+            return
+        prev = self.head 
+        for _ in range(k - 1):
+            prev = prev.next
+        new_head = prev.next
+        tail.next = self.head
+        prev.next = None
+        self.head = new_head
     def cyclic_right(self , k):
         if self.head is None or k == 0:
             return 

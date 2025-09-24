@@ -1,49 +1,64 @@
+import sys
 class Node:
-    def __init__(self , value):
+    def __init__(self, value):
         self.value = value
         self.next = None
-class LinkedLists:
+
+class LinkedList:
     def __init__(self):
         self.head = None
-    def append(self , value):
-        new_node = Node(value)
-        if not self.head:
-            self.head = new_node
-            return
-        current = self.head
-        while current.next:
-            current = current.next
-        current.next = new_node
-    def shift(self , k , n):
-            if self.head is None or k%n==0:
-                return
-            tail = self.head
-            length = 1
-            while tail.next:
-                tail = tail.next 
-                length += 1
-            tail.next = self.head
-            shift = length - (k % length)
-            steps_to_new_tail = length - shift-1
-            new_tail = self.head
-            for _ in range(steps_to_new_tail):
-                new_tail = new_tail.next
-            self.head = new_tail.next 
-            new_tail.next = None
-            return self.head
-    def print_list(self):
-        current = self.head
-        while current :
-            print(current.value , end  = " ")
-            current = current.next
-        print()
-if __name__ == "__main__":
-    n, k = map(int, input().split())
-    words = input().split()
+        self.tail = None  
 
-    ll = LinkedLists()
-    for w in words:
-        ll.append(w)
+    def append_unique(self, value):
+        if self.head is None:  
+            node = Node(value)
+            self.head = node
+            self.tail = node
+        else:
+            if self.tail.value != value:   
+                node = Node(value)
+                self.tail.next = node
+                self.tail = node
 
-    ll.shift(k, n)   
-    ll.print_list()  
+    def reverse(self):
+       
+        prev = None
+        current = self.head
+        while current:
+            nxt = current.next
+            current.next = prev
+            prev = current
+            current = nxt
+        self.head = prev 
+
+    def __len__(self):
+      
+        count = 0
+        current = self.head
+        while current:
+            count += 1
+            current = current.next
+        return count
+
+    def __iter__(self):
+       
+        current = self.head
+        while current:
+            yield current.value
+            current = current.next
+
+
+t = sys.stdin.read().split()
+n = int(t[0])
+names = t[1:1+n]
+
+res = LinkedList()
+
+for s in names:
+    res.append_unique(s)
+
+res.reverse()
+
+print(f"All in all: {len(res)}")
+print("Students:")
+print("\n".join(res))

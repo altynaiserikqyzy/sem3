@@ -31,15 +31,7 @@ class LinkedLists():
                     return
                 prev = current 
                 current = current.next
-                current_pos += 1
-
-    def to_list(self):
-        result = []
-        cur = self.head
-        while cur:
-            result.append(cur.value)
-            cur = cur.next
-        return result                
+                current_pos += 1             
     def print_list(self):
         current = self.head
         while current:
