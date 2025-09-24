@@ -1,64 +1,51 @@
-import sys
-class Node:
-    def __init__(self, value):
+import sys 
+class Node():
+    def __init__(self , value):
         self.value = value
         self.next = None
 
-class LinkedList:
-    def __init__(self):
-        self.head = None
-        self.tail = None  
-
-    def append_unique(self, value):
-        if self.head is None:  
-            node = Node(value)
-            self.head = node
-            self.tail = node
+    
+def build_ll(words):
+    head = None
+    tail = None
+    for w in words:
+        node = Node(w)
+        if not head:
+            head = node
+            tail = node
         else:
-            if self.tail.value != value:   
-                node = Node(value)
-                self.tail.next = node
-                self.tail = node
-
-    def reverse(self):
-       
-        prev = None
-        current = self.head
-        while current:
-            nxt = current.next
-            current.next = prev
-            prev = current
-            current = nxt
-        self.head = prev 
-
-    def __len__(self):
-      
-        count = 0
-        current = self.head
-        while current:
-            count += 1
-            current = current.next
-        return count
-
-    def __iter__(self):
-       
-        current = self.head
-        while current:
-            yield current.value
-            current = current.next
-
-
+            tail.next = node
+            tail = node
+    return head , tail
+def shift_ll(head , k):
+    if head is None :
+        return None
+    length = 1
+    tail = head 
+    while tail.next:
+        tail = tail.next 
+        length +=1
+    k = k%length
+    if k == 0:
+        return head
+    new_tail = head
+    for _ in range(k-1):
+        new_tail = new_tail.next
+    new_head = new_tail.next
+    new_tail.next = None
+    tail.next = head
+    return new_head
+def print_ll(head):
+    current = head
+    res = []
+    while current:
+        res.append(current.value)
+        current = current.next
+    print(' '.join(res))
 t = sys.stdin.read().split()
 n = int(t[0])
-names = t[1:1+n]
-
-res = LinkedList()
-
-for s in names:
-    res.append_unique(s)
-
-res.reverse()
-
-print(f"All in all: {len(res)}")
-print("Students:")
-print("\n".join(res))
+k = int(t[1])
+words = t[2:2+n]
+head , tail = build_ll(words)
+head = shift_ll(head , k)
+print_ll(head)
