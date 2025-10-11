@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/rgalbekovaaltynai/Documents/GitHub/sem3/l4/output/h'
+relocations:     []
+...
